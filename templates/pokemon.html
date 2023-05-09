@@ -1,0 +1,102 @@
+{% include 'navbar.html' %}
+
+<style>
+    body, html {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        background: #F5F5F5;
+        background-repeat: no-repeat;
+      }
+
+    .row {
+        margin-bottom: 100px;
+    }
+
+    .form {
+        margin-bottom: 100px;
+    }
+
+    .image-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+
+    .image-container img{
+        max-width: 100%;
+        width: auto;
+        height: 100px;
+    }
+
+    .pokemon-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .pokemon-card {
+        width: 300px;
+        background-color: #FFFFFF;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin: 10px;
+        padding: 20px;
+        text-align: center;
+    }
+    
+    .pokemon-image {
+        width: 200px !Important;
+        height: auto !Important;
+    }
+
+</style>
+
+
+{% block content %}
+    <body>
+        <div class="container">
+            <div class="form text-center">
+                <form method="post">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="poke_search" id="poke_search" placeholder="Poke Regex">
+                    </div>
+                    <button type="submit" class="btn btn-default">Search</button>
+                </form>
+            </div>
+            <div class="pokemon-container">
+                {% for key in poke_dict %}
+                    <div class="pokemon-card">
+                        <div class="image-container">
+                            <a href="{{ url_for('pokemon_detail', pokemon_id=key) }}">
+                                <img class="pokemon-image"
+                                     src="{{ poke_dict[key].link_normal }}"
+                                     data-normal-src="{{ poke_dict[key].link_normal }}"
+                                     data-shiny-src="{{ poke_dict[key].link_shiny }}">
+                            </a>
+                        </div>
+                        <button class="toggle-button btn btn-primary" onclick="toggleShinyMode(this)">Toggle Shiny</button>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </body>
+    <script>
+        function toggleShinyMode(button) {
+            var image = button.previousElementSibling.querySelector('.pokemon-image');
+            var normalSrc = image.getAttribute('data-normal-src');
+            var shinySrc = image.getAttribute('data-shiny-src');
+
+            if (image.src === shinySrc) {
+                image.src = normalSrc;
+            } 
+            else {
+                image.src = shinySrc;
+            }
+        }
+    </script>
+{% endblock %}

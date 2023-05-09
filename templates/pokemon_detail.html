@@ -1,0 +1,113 @@
+{% include 'navbar.html' %}
+
+<style>
+    body, html {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        background: #F5F5F5;
+        background-repeat: no-repeat;
+    }
+
+    .row {
+        margin-bottom: 10px;
+    }
+
+    .form {
+        margin-bottom: 100px;
+    }
+
+    .pokemon-card {
+        margin: 10px;
+        text-align: center;
+        align-items: center;
+        padding: 10px;
+        background-color: #FFFFFF;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .pokemon-image {
+        width: 200px !important;
+        height: auto !important;
+    }
+
+    .pokemon-name {
+        margin-top: 20px;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .pokemon-types {
+        margin-top: 10px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .pokemon-type {
+        display: inline-block;
+        padding: 4px 8px;
+        margin-right: 6px;
+        background-color: #E8E8E8;
+        border-radius: 4px;
+    }
+
+    .pokemon-stats {
+        margin-top: 20px;
+        font-size: 18px;
+    }
+
+</style>
+
+{% block content %}
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="pokemon-card mx-auto">
+                        <div class="pokemon-image">
+                            <img src="{{pokemon.link_normal}}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="pokemon-card mx-auto">
+                        <div class="pokemon-image">
+                            <img src="{{pokemon.link_shiny}}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-100">
+                <h2 class="text-center pokemon-name">{{pokemon.name}}</h2>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <h3 class="text-center">Type(s)</h3>
+                    <div class="text-center pokemon-types">
+                        {% if pokemon.type1 %}
+                            <span class="pokemon-type">{{pokemon.type1}}</span>
+                        {% endif %}
+                        {% if pokemon.type2 %}
+                            <span class="pokemon-type">{{pokemon.type2}}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <h3 class="text-center">Stats</h3>
+                    <div class="text-center pokemon-stats">
+                        <p><strong>Attack:</strong> {{pokemon.atk}}</p>
+                        <p><strong>Defense:</strong> {{pokemon.df}}</p>
+                        <p><strong>Special Attack:</strong> {{pokemon.spatk}}</p>
+                        <p><strong>Special Defense:</strong> {{pokemon.spdf}}</p>
+                        <p><strong>Speed:</strong> {{pokemon.speed}}</p>
+                        <p><strong>HP:</strong> {{pokemon.hp}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+{% endblock %}

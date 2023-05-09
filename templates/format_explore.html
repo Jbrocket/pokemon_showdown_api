@@ -1,0 +1,126 @@
+{% include 'navbar.html' %}
+
+<style>
+  body,
+  html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background: #F5F5F5;
+    background-repeat: no-repeat;
+  }
+
+  .container {
+    margin-top: 40px;
+  }
+
+  .card {
+    margin-bottom: 20px;
+  }
+
+  .card-body {
+    padding: 20px;
+  }
+
+  ul {
+    padding-left: 20px;
+  }
+
+  .replay-list {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .replay-link {
+    display: block;
+    text-decoration: none;
+    color: #333;
+    padding: 5px 0;
+  }
+
+  .replay-heading {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  .pokemon-list {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .pokemon-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .pokemon-image {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+</style>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <form action="{{ url_for('format') }}" method="POST">
+                        <div class="form-group">
+                            <label for="formatSelect">Select Format:</label>
+                            <select class="form-control" id="formatSelect" name="format">
+                                {% for format in formats %}
+                                <option value="{{ format }}">{{ format }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    {% if format_stats %}
+                        <h2 class="replay-heading">Top 10 Most Seen Pokémon</h2>
+                        <ul class="pokemon-list replay-list">
+                            {% for pokemon in format_stats %}
+                            <li class="pokemon-item replay-link">
+                                <a class="replay-link" href="/pokemon/{{ pokemon }}">
+                                    <img src="{{ format_stats[pokemon][0].link_normal }}" alt="{{ format_stats[pokemon][0].name }}" class="pokemon-image">
+                                    <span>{{ format_stats[pokemon][0].name }} - {{ format_stats[pokemon][1]}}</span>
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No Pokémon data available.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    {% if games %}
+                        <h2 class="replay-heading">{{ format }} Replays</h2>
+                        <ul class="replay-list">
+                            {% for game, replay_link in games.items() %}
+                            <li class="replay-link"><a target="_blank" class="replay-link" href="{{ replay_link }}">{{ game }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No games to display.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,74 @@
+{% include 'navbar.html' %}
+
+<style>
+    body, html {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        background: #F5F5F5;
+        background-repeat: no-repeat;
+    }
+
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .move-card {
+        width: 300px;
+        background-color: #FFFFFF;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin: 10px;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .move-name {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .move-attribute {
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+
+    .move-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+</style>
+
+{% block content %}
+    <div class="container">
+        <div class="form text-center">
+            <form method="post">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="move_search" id="move_search" placeholder="Move Regex">
+                </div>
+                <button type="submit" class="btn btn-default">Search</button>
+            </form>
+        </div>
+        <div class="move-container">
+            {% for key, move in move_dict.items() %}
+                <div class="move-card">
+                    <h3 class="move-name">{{ move.name }}</h3>
+                    <p class="move-attribute"><strong>Type:</strong> {{ move.type }}</p>
+                    <p class="move-attribute"><strong>Accuracy:</strong> {{ move.accuracy }}</p>
+                    <p class="move-attribute"><strong>Damage:</strong> {{ move.damage }}</p>
+                    <p class="move-attribute"><strong>PP:</strong> {{ move.pp }}</p>
+                    <p class="move-attribute"><strong>Priority:</strong> {{ move.priority }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
